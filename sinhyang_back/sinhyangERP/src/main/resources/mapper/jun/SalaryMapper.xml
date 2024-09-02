@@ -7,8 +7,8 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO erp_member_salary(member_info_key, member_salary_money) 
-		VALUES(#{member_info_key}, #{member_salary_money})
+		INSERT INTO erp_member_salary(member_info_key, member_salary_money, member_salary_date) 
+		VALUES(#{member_info_key}, #{member_salary_money}, NOW())
 	</insert>
 	
 	<select id="memberList" resultType="com.sinhyangERP.ERP.jun.member.MemberVO">
@@ -17,49 +17,53 @@
 	    LEFT JOIN erp_dept d ON m.dept_key = d.dept_key
 	    LEFT JOIN erp_member_salary s ON m.member_info_key = s.member_info_key
 	    <where>
+	    	m.member_info_job != '퇴사'
 	        <if test="query.key == 'member_info_key'">
-	            m.member_info_key like #{query.word}
+	            AND m.member_info_key LIKE #{query.word}
 	        </if>
 	        <if test="query.key == 'member_info_name'">
-	            member_info_name like #{query.word}
+	            AND m.member_info_name LIKE #{query.word}
 	        </if>
 	        <if test="query.key == 'dept_key'">
-	            m.dept_key like #{query.word}
+	            AND m.dept_key LIKE #{query.word}
 	        </if>
 	        <if test="query.key == 'member_info_hiredate'">
-	            member_info_hiredate = #{vo.member_info_hiredate}
+	            AND m.member_info_hiredate = #{vo.member_info_hiredate}
 	        </if>
-	        AND member_info_job != '퇴사' 
-	        <if test="vo.member_salary_date != null">
-	        	AND DATE_FORMAT(s.member_salary_date, '%Y-%m') != DATE_FORMAT(NOW(), '%Y-%m'))
+	        <if test="vo.member_salary_date == null or DATE_FORMAT(s.member_salary_date, '%Y-%m') != DATE_FORMAT(NOW(), '%Y-%m')">
+	            AND (s.member_salary_date IS NULL 
+	            OR DATE_FORMAT(s.member_salary_date, '%Y-%m') != DATE_FORMAT(NOW(), '%Y-%m'))
 	        </if>
 	    </where>
-	    ORDER BY member_info_hiredate DESC
+	    ORDER BY m.member_info_hiredate DESC
 	    LIMIT #{query.start}, #{query.size}
 	</select>
+
 	
 	<select id="memberTotal" resultType="int">
 		SELECT count(*) total 
 		FROM erp_member_info m
-		LEFT JOIN erp_dept d ON m.dept_key = d.dept_key 
-		LEFT JOIN erp_member_salary s ON m.member_info_key = s.member_info_key 
-		<where>
-			<if test="query.key == 'member_info_key'">
-				m.member_info_key like #{query.word}
-			</if>
-			<if test="query.key == 'member_info_name'">
-				member_info_name like #{query.word}
-			</if>
-			<if test="query.key == 'dept_key'">
-				m.dept_key like #{query.word}
-			</if>
-			<if test="query.key == 'member_info_hiredate'">
-				member_info_hiredate = #{vo.member_info_hiredate}
-			</if>
-			AND member_info_job != '퇴사' 
-			AND (s.member_salary_date IS NULL 
-             OR DATE_FORMAT(s.member_salary_date, '%Y-%m') != DATE_FORMAT(NOW(), '%Y-%m'))
-		</where>
+	    LEFT JOIN erp_dept d ON m.dept_key = d.dept_key
+	    LEFT JOIN erp_member_salary s ON m.member_info_key = s.member_info_key
+	    <where>
+	    	m.member_info_job != '퇴사'
+	        <if test="query.key == 'member_info_key'">
+	            AND m.member_info_key LIKE #{query.word}
+	        </if>
+	        <if test="query.key == 'member_info_name'">
+	            AND m.member_info_name LIKE #{query.word}
+	        </if>
+	        <if test="query.key == 'dept_key'">
+	            AND m.dept_key LIKE #{query.word}
+	        </if>
+	        <if test="query.key == 'member_info_hiredate'">
+	            AND m.member_info_hiredate = #{vo.member_info_hiredate}
+	        </if>
+	        <if test="vo.member_salary_date == null or DATE_FORMAT(s.member_salary_date, '%Y-%m') != DATE_FORMAT(NOW(), '%Y-%m')">
+	            AND (s.member_salary_date IS NULL 
+	            OR DATE_FORMAT(s.member_salary_date, '%Y-%m') != DATE_FORMAT(NOW(), '%Y-%m'))
+	        </if>
+	    </where>
 	</select>
 	
 </mapper>
