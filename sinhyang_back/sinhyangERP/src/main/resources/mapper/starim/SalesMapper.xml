@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.SalesMapper">
+	 <select id="list" resultType="com.sinhyangERP.ERP.starim.sales.SalesVO">
+	 	select * from view_sales
+	 	<where>
+			<if test="key=='member_info_name'">
+				member_info_name like #{word} 
+			</if>
+			<if test="key=='sales_employee'">
+				sales_employee like #{word} 
+			</if>
+			<if test="key=='sales_id'">
+				sales_id like #{word}
+			</if>
+			<if test="key=='sales_date'">
+				sales_date like #{word}
+			</if>
+		</where>
+		limit #{start}, #{size};
+	 </select>
+ 	<select id ="total" resultType="int">
+ 		select count(*) from view_sales
+ 		<if test="key=='member_info_name'">
+			where member_info_name like #{word}	
+		</if>
+		<if test="key=='sales_employee'">
+			where sales_employee like #{word}
+		</if>
+		<if test="key=='sales_id'">
+			where sales_id like #{word}
+		</if>
+		<if test="key=='sales_date'">
+			where sales_date like #{word}
+		</if>
+	</select>
+	
+	 <select id="transactionList" resultType="com.sinhyangERP.ERP.starim.sales.SalesVO">
+	 	select * from view_sales
+	 	<where>
+			<if test="key=='member_info_name'">
+				member_info_name like #{word} 
+			</if>
+			<if test="key=='sales_employee'">
+				sales_ like #{word} 
+			</if>
+			<if test="key=='sales_id'">
+				sales_id like #{word}
+			</if>
+			<if test="key=='sales_date'">
+				sales_date like #{word}
+			</if>
+			AND sales_type = 0
+		</where>
+		limit #{start}, #{size};
+	 </select>
+ 	<select id ="transactionTotal" resultType="int">
+ 		select count(*) from view_sales
+ 		<where>
+	 		<if test="key=='member_info_name'">
+				member_info_name like #{word}	
+			</if>
+			<if test="key=='sales_employee'">
+				sales_employee like #{word}
+			</if>
+			<if test="key=='sales_id'">
+				sales_id like #{word}
+			</if>
+			<if test="key=='sales_date'">
+				sales_date like #{word}
+			</if>
+			AND sales_type = 0
+		</where>
+	</select>
+	
+	 <select id="getSaleID" resultType="string" statementType="CALLABLE">
+	 	{call getSaleId()}
+	 </select>
+	 <insert id="insert">
+	 	insert into erp_sales (sales_id, sales_employee, sales_location, sales_date) values(#{sales_id}, #{sales_employee}, #{sales_location}, #{sales_date} )
+	 </insert>
+	 <delete id="delete">
+	 	delete from erp_sales where sales_id = #{sales_id}
+	 </delete>
+	 <update id="update">
+		update erp_sales
+		<set>
+			<if test="sales_date != null">
+		 		sales_date=#{sales_date}, 
+		 	</if>
+		 	<if test="sales_employee != null">
+		 		sales_employee=#{sales_employee}, 
+		 	</if>
+		 	<if test="sales_location != 0">
+		 		sales_location=#{sales_location}, 
+		 	</if>
+		 	<if test="sales_type != 0">
+		 		sales_type = #{sales_type}
+		 	</if>
+		 </set>
+		 where sales_id = #{sales_id}
+	</update>
+	<select id="viewList" resultType="com.sinhyangERP.ERP.starim.sales.SalesVO">
+	 	select * from view_sales_chart
+	 	<where>
+			<if test="key=='sales_employee'">
+				sales_employee like #{word}
+			</if>
+		</where>
+	 </select>
+</mapper>

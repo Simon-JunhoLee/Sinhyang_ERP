@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.ItemsMapper">
+	<select id="list" resultType="com.sinhyangERP.ERP.starim.items.ItemsVO">
+		select * from erp_items
+		<where>
+			<if test="key=='items_id'">
+				items_id like #{word} 
+			</if>
+			<if test="key=='items_name'">
+				items_name like #{word} 
+			</if>
+			<if test="key=='items_type'">
+				items_type like #{word}
+			</if>
+		</where>
+		limit #{start}, #{size};
+	</select>
+	<select id="listpage" resultType="com.sinhyangERP.ERP.starim.items.ItemsVO">
+		select * from erp_items;
+	</select>
+	<select id ="total" resultType="int">
+	 		select count(*) from erp_items
+	 		<if test="key=='items_id'">
+				where items_id like #{word}	
+			</if>
+			<if test="key=='items_name'">
+				where items_name like #{word}
+			</if>
+			<if test="key=='items_type'">
+				where items_type like #{word}
+			</if>
+	</select>
+	 <insert id="insert">
+	 	insert into erp_items(items_id, items_name, items_type, items_photo)  values(#{items_id}, #{items_name}, #{items_type}, #{items_photo})
+	 </insert>
+	<delete id="delete">
+		delete from erp_items where items_id = #{items_id}
+	</delete>
+	<select id="read" resultType="com.sinhyangERP.ERP.starim.items.ItemsVO">
+		select * from erp_items where items_id = #{items_id}
+	</select>
+	<update id="update">
+		update erp_items set items_name=#{items_name}, items_photo=#{items_photo}, items_type=#{items_type} where items_id = #{items_id}
+	</update>
+	<update id="updatePhoto">
+	 	update erp_items set items_photo = #{items_photo} where items_id=#{items_id}
+	</update>
+	<insert id="insertPhoto">
+	 	insert into erp_items(items_photo) values(#{items_photo})
+	</insert>
+</mapper>

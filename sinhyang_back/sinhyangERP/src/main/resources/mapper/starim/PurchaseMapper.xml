@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.PurchaseMapper">
+	 <select id="list" resultType="com.sinhyangERP.ERP.starim.purchase.PurchaseVO">
+	 	select * from view_purchase
+	 	<where>
+			<if test="key=='member_info_name'">
+				member_info_name like #{word}
+			</if>
+			<if test="key=='purchase_employee'">
+				purchase_employee like #{word}
+			</if>
+			<if test="key=='purchase_id'">
+				purchase_id like #{word}
+			</if>
+			<if test="key=='purchase_date'">
+				purchase_date like #{word}
+			</if>
+		</where>
+		limit #{start}, #{size};
+	 </select>
+ 	<select id ="total" resultType="int">
+ 		select count(*) from view_purchase
+ 		<if test="key=='member_info_name'">
+			where member_info_name like #{word}
+		</if>
+		<if test="key=='purchase_employee'">
+			where purchase_employee like #{word}
+		</if>
+		<if test="key=='purchase_date'">
+			where purchase_date like #{word}
+		</if>
+	</select>
+	
+	 <select id="transactionList" resultType="com.sinhyangERP.ERP.starim.purchase.PurchaseVO">
+	 	select * from view_purchase
+	 	<where>
+			<if test="key=='member_info_name'">
+				member_info_name like #{word}
+			</if>
+			<if test="key=='purchase_employee'">
+				purchase_employee like #{word}
+			</if>
+			<if test="key=='purchase_id'">
+				purchase_id like #{word}
+			</if>
+			<if test="key=='purchase_date'">
+				purchase_date like #{word}
+			</if>
+			AND purchase_type = 0
+		</where>
+		limit #{start}, #{size};
+	 </select>
+ 	<select id ="transactionTotal" resultType="int">
+ 		select count(*) from view_purchase
+ 		<where>
+	 		<if test="key=='member_info_name'">
+				member_info_name like #{word}
+			</if>
+			<if test="key=='purchase_employee'">
+				purchase_employee like #{word}
+			</if>
+			<if test="key=='purchase_date'">
+				purchase_date like #{word}
+			</if>
+			AND purchase_type = 0
+		</where>
+	</select>
+	
+	 <select id="getPurchaseID" resultType="string" statementType="CALLABLE">
+	 	{call getPurchaseId()}
+	 </select>
+	 <insert id="insert">
+	 	insert into erp_purchase (purchase_id, purchase_employee, purchase_location, purchase_date) values(#{purchase_id}, #{purchase_employee}, #{purchase_location}, #{purchase_date} )
+	 </insert>
+	 <delete id="delete">
+	 	delete from erp_purchase where purchase_id = #{purchase_id}
+	 </delete>
+	 
+	 <update id="update">
+	    UPDATE erp_purchase
+	    <set>
+	        <if test="purchase_date != null">
+	            purchase_date = #{purchase_date},
+	        </if>
+	        <if test="purchase_employee != null">
+	            purchase_employee = #{purchase_employee},
+	        </if>
+	        <if test="purchase_location != 0">
+	            purchase_location = #{purchase_location},
+	        </if>
+	        <if test="purchase_type != 0">
+	            purchase_type = #{purchase_type}
+	        </if>
+	    </set>
+	    WHERE purchase_id = #{purchase_id}
+	</update>
+	<select id="viewList" resultType="com.sinhyangERP.ERP.starim.purchase.PurchaseVO">
+	 	select * from view_pi
+	 	<where>
+			<if test="key=='purchase_employee'">
+				purchase_employee like #{word}
+			</if>
+		</where>
+	 </select>
+
+</mapper>

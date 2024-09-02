@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.han.ChartMapper">
+	 
+	<select id="totalPurchaseByDate" resultType="java.util.HashMap">
+		select date, sum(price*qnt) as totalPurchase, type
+		from trade_view
+		where type='1'
+		group by date
+	</select>
+	<select id="totalSaleByDate" resultType="java.util.HashMap">
+		select date, sum(price*qnt) as totalSale, type
+		from trade_view
+		where type='2'
+		group by date
+	</select>
+	
+	<select id="totalSaleByWarehouse" resultType="java.util.HashMap">
+		select warehouse_name, Sum(price*qnt) as totalSale
+		from trade_view
+		where type='2'
+		group by warehouse_name
+	</select>
+	
+	<select id="profitByDate" resultType="java.util.HashMap">
+		select item, item_name, date,
+			sum(case when type='1' then price*qnt else 0 end) as totalPurchase,
+			sum(case when type='2' then price*qnt else 0 end) as totalSale,
+			sum(case when type='2' then price*qnt else 0 end) - 
+			sum(case when type='1' then price*qnt else 0 end) as profit
+		from trade_view
+		group by date, item
+	</select>
+	
+	<select id="saleByCountry" resultType="java.util.HashMap">
+		select i.sales_items_id as item,
+			i.sales_qnt as qnt, 
+			i.sales_price as price,
+			(i.sales_qnt * i.sales_price) as sale, 
+			s.sales_location as location,
+			s.sales_date as date
+		from erp_sales s, erp_sales_info i
+		where i.sales_id = s.sales_id
+		group by s.sales_location as location
+	</select>
+	
+	<select id="restAccount" resultType="java.util.HashMap">
+		select account_total as total,
+			account_regdate as date
+		from erp_account
+	</select>
+</mapper>

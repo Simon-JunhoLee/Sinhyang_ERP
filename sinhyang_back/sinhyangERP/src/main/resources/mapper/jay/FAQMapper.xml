@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.jay.FAQMapper">
+
+
+		
+		<insert id="FAQinsert">
+			insert into web_faq(faq_admin, faq_title,faq_contents,faq_type, faq_viewcnt )
+			values(#{faq_admin}, #{faq_title}, #{faq_contents}, #{faq_type}, #{faq_viewcnt});
+		</insert>
+		<select id="FAQread" resultType="com.sinhyangERP.ERP.jay.BBS.faq.FAQVO">
+			select * from web_faq
+			where faq_id = #{faq_id}
+		</select>
+		<select id="FAQlist" resultType="com.sinhyangERP.ERP.jay.BBS.faq.FAQVO">
+			select * from web_faq
+				<where>
+					<if test="key == 'faq_title'"> faq_title like (#{word}) </if>
+					<if test="key == 'faq_contents'"> faq_contents like (#{word}) </if>
+				</where>
+			order by faq_id desc
+			limit #{start}, #{size}
+		</select>
+		
+		<update id="FAQupdate">
+			update web_faq
+			set faq_contents=#{faq_contents}, faq_title = #{faq_title}
+			where faq_id=#{faq_id}
+		</update>
+		<delete id="FAQdelete">
+			delete from web_faq
+			where faq_id=#{faq_id}
+		</delete>
+	 <select id="now" resultType="string">
+	 	select now();
+	 </select>
+	 <select id="total" resultType="int">
+	 select count(*) 
+	 from web_faq;
+	 </select>
+	 
+	
+	
+	
+</mapper>

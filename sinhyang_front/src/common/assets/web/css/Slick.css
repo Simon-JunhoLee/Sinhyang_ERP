@@ -1,0 +1,36 @@
+
+@import '@fortawesome/fontawesome-free/css/all.min.css'; 
+
+.web-hompage-slick .slick-prev::before,
+.web-hompage-slick .slick-next::before {
+  display: none;
+}
+
+.web-hompage-slick .slick-dots {
+  bottom: 5px;
+  margin-bottom: 2rem;
+}
+
+.web-hompage-slick .slick-dots li {
+  margin: 0 6px; /* 도트 간격 */
+}
+
+.web-hompage-slick .slick-dots li button {
+  width: 20px; /* 도트 크기 */
+  height: 20px; /* 도트 크기 */
+  border: none; /* 기본 테두리 제거 */
+  background: transparent; /* 배경을 투명하게 */
+  color: rgb(250, 247, 247); /* 아이콘 색상 */
+}
+
+.web-hompage-slick .slick-dots li button::before {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f111'; /* FontAwesome 아이콘 코드 (원형) */
+  font-weight: 800;
+  font-size: 20px; /* 아이콘 크기 */
+}
+
+.web-hompage-slick .slick-dots li.slick-active button::before {
+  color: rgb(255, 255, 255); /* 활성화된 도트 색상 */
+}
+

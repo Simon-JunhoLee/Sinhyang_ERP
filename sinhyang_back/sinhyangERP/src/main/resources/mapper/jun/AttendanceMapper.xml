@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.jun.AttendanceMapper">
+	 <select id="list" resultType="com.sinhyangERP.ERP.jun.attendance.AttendanceVO">
+	 	SELECT 
+		    m.member_info_name,
+		    a.*,
+		    TIMESTAMPDIFF(HOUR, a.member_attendance_start, a.member_attendance_end) AS hours_worked,
+		    TIMESTAMPDIFF(MINUTE, a.member_attendance_start, a.member_attendance_end) % 60 AS minutes_worked 
+		FROM 
+		    erp_member_info m
+		    INNER JOIN erp_member_attendance a ON m.member_info_key = a.member_info_key 
+		ORDER BY 
+		    m.member_info_key, a.member_attendance_date
+	 </select>
+	 
+	 <select id="listMember" resultType="com.sinhyangERP.ERP.jun.attendance.AttendanceVO">
+	 	SELECT 
+		    a.*, m.member_info_name, 
+		    TIMESTAMPDIFF(HOUR, member_attendance_start, member_attendance_end) AS hours_worked,
+		    TIMESTAMPDIFF(MINUTE, member_attendance_start, member_attendance_end) % 60 AS minutes_worked 
+		FROM 
+		    erp_member_info m 
+		    INNER JOIN erp_member_attendance a ON m.member_info_key = a.member_info_key 
+		WHERE 
+		    a.member_info_key = #{member_info_key}
+		ORDER BY 
+		    member_attendance_date;	
+	 </select>
+	 
+	 <select id="read" resultType="com.sinhyangERP.ERP.jun.attendance.AttendanceVO">
+	 	SELECT 
+		    a.*, m.member_info_name, 
+		    TIMESTAMPDIFF(HOUR, member_attendance_start, member_attendance_end) AS hours_worked,
+		    TIMESTAMPDIFF(MINUTE, member_attendance_start, member_attendance_end) % 60 AS minutes_worked 
+		FROM 
+		    erp_member_info m 
+		    INNER JOIN erp_member_attendance a ON m.member_info_key = a.member_info_key 
+		WHERE 
+		    a.member_info_key = #{member_info_key}
+		AND
+			member_attendance_date = #{member_attendance_date}
+	 </select>
+	 
+	 <insert id="insert">
+	 	INSERT INTO erp_member_attendance(member_info_key, member_attendance_date, member_attendance_start) 
+	 	VALUES(#{member_info_key}, NOW(), NOW())
+	 </insert>
+	 
+	 <update id="update">
+	 	UPDATE erp_member_attendance SET member_attendance_end = NOW()
+	 	WHERE member_info_key = #{member_info_key}
+	 	AND member_attendance_date = CURDATE();
+	 </update>
+	 
+</mapper>

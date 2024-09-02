@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.jay.BBSMapper">
+	
+	<insert id="insertBBS" >
+		insert into web_bbs(bbs_id, bbs_title, bbs_writer, bbs_content, bbs_category)
+		values(#{bbs_id},#{bbs_title}, #{bbs_writer}, #{bbs_content}, #{bbs_category})
+	</insert>
+		
+	<select id="list" resultType="com.sinhyangERP.ERP.jay.BBS.BBSVO">
+		select * from web_bbs
+		<where>
+			<if test="key=='bbs_title'">bbs_title like #{word}</if>
+			<if test="key=='bbs_content'">bbs_content like #{word}</if>
+		</where>
+		order by bbs_id desc
+		limit #{start}, #{size}
+		
+	</select>
+	 <select id="total" resultType="int">
+	 	select count(*) 
+	 	from web_bbs
+	 	<where>
+			<if test="key=='bbs_title'">bbs_title like #{word}</if>
+			<if test="key=='bbs_content'">bbs_content like #{word}</if>
+		</where>
+	 </select>
+	 
+	 	<select id="BBSread" resultType="com.sinhyangERP.ERP.jay.BBS.BBSVO">
+	 		select * from web_bbs
+	 		where bbs_id=#{bbs_id}
+	 	</select>
+	 
+	 <select id="now" resultType="string">
+	 	select now();
+	 </select>
+	
+	
+	<select id="plist" resultType="com.sinhyangERP.ERP.jay.BBS.BBSVO">
+		select * from web_bbs
+		order by bbs_id desc
+		limit #{start}, #{size}
+	</select>	
+	 <update id="BBSupdate">
+		update web_bbs
+		set bbs_title=#{bbs_title}, bbs_content=#{bbs_content}
+		where bbs_id=#{bbs_id}
+	 </update>
+	 <delete id="deleteBBS">
+	 	delete from web_bbs
+	 	where bbs_id=#{bbs_id}
+	 </delete>
+	
+	 <update id="viewcntupdate">
+	 	update web_bbs
+	 	set bbs_viewcnt = bbs_viewcnt+1
+	 	where bbs_id=#{bbs_id}
+	 </update>
+</mapper>

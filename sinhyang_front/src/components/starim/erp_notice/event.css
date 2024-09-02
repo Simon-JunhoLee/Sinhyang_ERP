@@ -1,0 +1,24 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .cell {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .cell.winner {
+    background-color: lightgreen;
+  }
+  
+  .cell.loser {
+    background-color: #ffcccc;
+  }
+  
+  .cell.isClicked {
+    background-color: lightblue;
+  }

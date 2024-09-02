@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.bj.SendMessageMapper">
+		
+		<select id="list" resultType="hashmap">
+			select m.* ,u.member_info_id
+			from erp_send_message m, erp_member_info u 
+			where message_sender = #{message_sender} and u.member_info_id=m.message_sender and message_state=0
+			ORDER BY message_id DESC
+       		LIMIT #{query.start}, #{query.size};
+		</select>
+		
+	<select id="total" resultType="int">
+       select count(*)
+       from erp_send_message m, erp_member_info u 
+	   where message_sender = #{message_sender} and u.member_info_id=m.message_sender and message_state=0
+    </select>
+		
+	 <insert id="insert">
+	 	insert into erp_send_message(message_sender, message_receiver, message_content, message_title)
+	 	values(#{message_sender}, #{message_receiver}, #{message_content}, #{message_title});
+	 </insert>
+	 
+	 
+	
+	<update id="updateSendState">
+		update erp_send_message
+		set message_state=1
+		where message_id=#{message_id};
+	</update>
+    
+    
+  	<delete id="delete" >
+		 delete from erp_send_message 
+		 where message_state=1 and message_id=#{message_id};
+	</delete>
+	
+	<select id="readSend" resultType="com.sinhyangERP.ERP.bj.message.MessageVO">
+		select m.* ,u.member_info_id
+		from erp_send_message m, erp_member_info u
+		where m.message_sender = u.member_info_id and m.message_id = #{message_id};
+	</select>
+	
+	
+	<select id="deleteList" resultType="hashmap">
+      	select m.* ,u.member_info_id
+		from erp_send_message m, erp_member_info u 
+		where message_sender = #{message_sender} and u.member_info_id=m.message_sender and message_state=1
+        ORDER BY message_id DESC
+        LIMIT #{query.start}, #{query.size}
+    </select>
+    
+    <select id="dtotal" resultType="int">
+       select count(*)
+       from erp_send_message m, erp_member_info u 
+	   where message_sender = #{message_sender} and u.member_info_id=m.message_sender and message_state=1
+    </select>
+
+    
+    
+     <update id="resetState">
+		update erp_send_message
+		set message_state=0
+		where message_id=#{message_id};
+	</update>
+</mapper>

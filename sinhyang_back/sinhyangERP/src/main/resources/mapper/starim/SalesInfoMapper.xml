@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.SalesInfoMapper">
+	 <select id="list" resultType="com.sinhyangERP.ERP.starim.sales.SalesInfoVO">
+	 	select * from erp_sales_info;
+	 </select>
+	 <select id="read" resultType="com.sinhyangERP.ERP.starim.sales.SalesInfoVO">
+	 	select * from erp_sales_info where sales_id=#{sales_id}
+	 </select>
+	 <insert id="insert">
+	 	insert into erp_sales_info (sales_id, sales_items_id, sales_qnt, sales_warehouse, sales_price) values( #{sales_id}, #{sales_items_id}, #{sales_qnt}, #{sales_warehouse}, #{sales_price} )
+	 </insert>
+	 <delete id="delete">
+	 	delete from erp_sales_info where sales_info_id = #{sales_info_id}
+	 </delete>
+	 <update id="update">
+		update erp_sales_info set sales_qnt=#{sales_qnt}, sales_warehouse=#{sales_warehouse}, sales_price=#{sales_price} where sales_info_id = #{sales_info_id}
+	</update>
+</mapper>

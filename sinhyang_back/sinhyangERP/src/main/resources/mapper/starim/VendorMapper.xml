@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.VendorMapper">
+	 <select id="list" resultType="com.sinhyangERP.ERP.starim.vendor.VendorVO">
+	 	select * from view_vendor;
+	 </select>
+	 <insert id="insert">
+	 	insert into erp_vendor( vendor_name, vendor_person, vendor_employee, vendor_phone, vendor_address, vendor_credit_limit, vendor_fax, vendor_email)  values( #{vendor_name}, #{vendor_person}, #{vendor_employee}, #{vendor_phone}, #{vendor_address}, #{vendor_credit_limit}, #{vendor_fax}, #{vendor_email})
+	 </insert>
+	<delete id="delete">
+		delete from erp_vendor where vendor_id = #{vendor_id}
+	</delete>
+	<select id="read" resultType="com.sinhyangERP.ERP.starim.vendor.VendorVO">
+		select * from vendor_VendorVO where vendor_id = #{vendor_id}
+	</select>
+	<update id="update">
+		update erp_vendor set vendor_name=#{vendor_name}, vendor_person=#{vendor_person}, vendor_employee=#{vendor_employee}, vendor_phone=#{vendor_phone}, vendor_address=#{vendor_address}, vendor_credit_limit=#{vendor_credit_limit}, vendor_fax=#{vendor_fax}, vendor_email=#{vendor_email} where vendor_id = #{vendor_id}
+	</update>
+</mapper>

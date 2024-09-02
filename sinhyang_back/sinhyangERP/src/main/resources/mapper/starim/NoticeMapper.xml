@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.NoticeMapper">
+	  	<select id="list" resultType="com.sinhyangERP.ERP.starim.notice.NoticeVO">
+	 		select * from erp_notice
+		    <where>
+				<if test="key=='notice_writer'">
+					notice_writer like #{word} or notice_type=1
+				</if>
+				<if test="key=='notice_title'">
+					notice_title like #{word} or notice_type=1
+				</if>
+				<if test="key=='notice_contents'">
+					notice_contents like #{word} or notice_type=1
+				</if>
+			  </where>
+			  order by notice_id desc limit #{start}, #{size};
+ 		</select>
+ 		<select id="listpage" resultType="com.sinhyangERP.ERP.starim.notice.NoticeVO">
+	 		select * from erp_notice;
+ 		</select>
+ 		
+ 		<select id ="total" resultType="int">
+	 		select count(*) from erp_notice
+	 		<if test="key=='notice_writer'">
+				where notice_writer like #{word}	
+			</if>
+			<if test="key=='notice_title'">
+				where notice_title like #{word}
+			</if>
+			<if test="key=='notice_contents'">
+				where notice_contents like #{word}
+			</if>
+ 		</select>
+	 	<select id="read" resultType="com.sinhyangERP.ERP.starim.notice.NoticeVO">
+	 		select * from erp_notice where notice_id=#{notice_id}
+	 	</select>
+	 	<delete id="delete">
+	 		delete from erp_notice where notice_id=#{notice_id}
+	 	</delete>
+	 	<update id="update">
+			update erp_notice set notice_title=#{notice_title}, notice_contents=#{notice_contents}, notice_type=#{notice_type} where notice_id=#{notice_id}	
+	 	</update>
+	 	<insert id="insert">
+	 		insert into erp_notice(notice_title, notice_contents, notice_writer) values(#{notice_title}, #{notice_contents}, #{notice_writer})
+	 	</insert>
+	 	<update id="updateViewcnt">
+	 		update erp_notice set notice_viewcnt=notice_viewcnt+1 where notice_id=#{notice_id}
+	 	</update>
+	 	<update id="updateNotice">
+	 		update erp_notice set notice_type=1 where notice_id=#{notice_id}
+	 	</update>
+	 	<update id="updateUnNotice">
+	 		update erp_notice set notice_type=0 where notice_id=#{notice_id}
+	 	</update>
+
+</mapper>

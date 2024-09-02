@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.han.InventoryMapper">
+	
+	<select id="listAll" resultType="com.sinhyangERP.ERP.han.inventory.InventoryVO"> 
+		select * from inventory_view
+		<where>
+			<if test="key=='items_id'">
+				items_id like #{word} 
+			</if>
+			<if test="key=='items_name'">
+				items_name like #{word} 
+			</if>
+			<if test="key=='items_type'">
+				items_type like #{word}
+			</if>
+		</where>	
+		group by items_id
+		limit #{start}, #{size}
+	</select>
+	<select id="listAllCount" resultType="int">
+		select count(*) from (select items_id from inventory_view
+		<where>
+			<if test="key=='items_id'">
+				items_id like #{word} 
+			</if>
+			<if test="key=='items_name'">
+				items_name like #{word} 
+			</if>
+			<if test="key=='items_type'">
+				items_type like #{word}
+			</if>
+		</where>
+		group by items_id) as grouped;
+	</select>
+	
+	
+	
+	<select id="listByWarehouse" resultType="com.sinhyangERP.ERP.han.inventory.InventoryVO">
+		select * from inventory_view
+		where warehouse_id=#{warehouse_id}
+			<if test="vo.key=='items_id'">
+				and items_id like #{vo.word} 
+			</if>
+			<if test="vo.key=='items_name'">
+				and items_name like #{vo.word} 
+			</if>
+			<if test="vo.key=='items_type'">
+				and items_type like #{vo.word}
+			</if>
+		limit #{vo.start}, #{vo.size}
+	</select>
+	<select id="listByWarehouseCount" resultType="int">
+		select count(*) from inventory_view
+		where warehouse_id=#{warehouse_id}
+			<if test="vo.key=='items_id'">
+				and items_id like #{vo.word} 
+			</if>
+			<if test="vo.key=='items_name'">
+				and items_name like #{vo.word} 
+			</if>
+			<if test="vo.key=='items_type'">
+				and items_type like #{vo.word}
+			</if>
+	</select>
+	 
+	
+	
+	
+	
+	
+	<select id="listRecent" resultType="com.sinhyangERP.ERP.han.inventory.TradeVO"> 
+		select * from trade_view where item=#{item}
+		<if test="warehouse!=0">
+			and warehouse=#{warehouse}
+		</if>
+
+		order by date desc limit 10
+	</select>
+	
+	
+	
+	<select id="listAlltrade" resultType="com.sinhyangERP.ERP.han.inventory.TradeVO">
+		select * from trade_view 
+		<where>
+			<if test="key=='date'">
+				date like #{word}
+			</if>
+			<if test="key=='type'">
+				type like #{word} 
+			</if>
+			<if test="key=='item_name'">
+				item_name like #{word}
+			</if>
+			<if test="key=='warehouse_name'">
+				warehouse_name like #{word}
+			</if>
+		</where>
+		order by date desc
+		limit #{start}, #{size}
+	</select>
+	<select id="listAlltradeCount" resultType="int">
+		select count(*) from trade_view
+		<where>
+			<if test="key=='date'">
+				date like #{word}
+			</if>
+			<if test="key=='type'">
+				type like #{word} 
+			</if>
+			<if test="key=='item_name'">
+				item_name like #{word}
+			</if>
+			<if test="key=='warehouse_name'">
+				warehouse_name like #{word}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	<select id="restqnt" resultType="com.sinhyangERP.ERP.han.inventory.InventoryVO">
+		select * from inventory_view where items_id = #{items_id}
+	</select>
+</mapper>

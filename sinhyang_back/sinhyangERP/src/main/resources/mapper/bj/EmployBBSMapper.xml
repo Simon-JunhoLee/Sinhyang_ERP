@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.EmployMapper">
+
+	 <select id="list" resultType="hashmap">
+	 	select * from employ_bbs_view
+	 	<where>
+		 	<if test="key=='employ_bbs_title'">employ_bbs_title like #{word}</if>
+			<if test="key=='employ_bbs_contents'">employ_bbs_contents like #{word}</if>
+		</where>
+		order by employ_bbs_id desc
+		limit #{start}, #{size} ;
+	 </select>
+	 
+	 
+	  <select id="listtable" resultType="com.sinhyangERP.ERP.bj.bbs.EmployBBSVO">
+	 	select * from employ_bbs_view
+	 </select>
+	 
+	 <select id="total" resultType="int">
+ 		select count(*)
+ 		from employ_bbs_view
+ 		<where>
+		 	<if test="key=='employ_bbs_title'">employ_bbs_title like #{word}</if>
+			<if test="key=='employ_bbs_contents'">employ_bbs_contents like #{word}</if>
+		</where>
+ 	 </select>
+ 	
+ 	 <insert id="insert" >
+ 		insert into web_employ_bbs(employ_bbs_admin, employ_bbs_title, employ_bbs_contents)	
+ 		values(#{employ_bbs_admin}, #{employ_bbs_title}, #{employ_bbs_contents})
+ 	 </insert>
+ 	 
+ 	 <delete id="delete">
+ 	 	delete from web_employ_bbs 
+ 	 	where employ_bbs_id=#{employ_bbs_id}
+ 	 </delete>
+ 	 
+ 	 <select id="read" resultType="com.sinhyangERP.ERP.bj.bbs.EmployBBSVO">
+		select * from web_employ_bbs
+		where employ_bbs_id=#{employ_bbs_id}
+	</select>
+	
+	<update id="update">
+		update web_employ_bbs
+		set employ_bbs_title=#{employ_bbs_title}, employ_bbs_contents=#{employ_bbs_contents}
+		where employ_bbs_id=#{employ_bbs_id}
+	</update>
+	
+	<update id="updateViewcnt">
+	 	update web_employ_bbs 
+	 	set employ_bbs_viewcnt=employ_bbs_viewcnt+1 
+	 	where employ_bbs_id=#{employ_bbs_id}
+	 </update>
+	 
+	 <update id="updateType">
+	 	update web_employ_bbs 
+	 	set employ_bbs_type=1 
+	 	where employ_bbs_id=#{employ_bbs_id}
+	 </update>
+	 	
+	 <update id="resetType">
+	 	update web_employ_bbs 
+	 	set employ_bbs_type=0 
+	 	where employ_bbs_id=#{employ_bbs_id}
+	 </update>
+	
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinhyangERP.ERP.mapper.jun.MemberMapper">
+	<select id="list" resultType="com.sinhyangERP.ERP.jun.member.MemberVO">
+		SELECT m.*, d.dept_name, s.member_salary_date
+		FROM erp_member_info m
+		LEFT JOIN erp_dept d ON m.dept_key = d.dept_key
+		LEFT JOIN erp_member_salary s ON m.member_info_key = s.member_info_key
+		<where>
+			<if test="query.key == 'member_info_key'">
+				member_info_key like #{query.word}
+			</if>
+			<if test="query.key == 'member_info_name'">
+				member_info_name like #{query.word}
+			</if>
+			<if test="query.key == 'dept_key'">
+				m.dept_key like #{query.word}
+			</if>
+			<if test="query.key == 'member_info_job'">
+				member_info_job like #{query.word}
+			</if>
+			<if test="query.key == 'member_info_hiredate'">
+				member_info_hiredate = #{vo.member_info_hiredate}
+			</if>
+		</where>
+		ORDER BY member_info_key desc
+		limit #{query.start}, #{query.size}
+	</select>
+	
+	<select id="total" resultType="int">
+		SELECT count(*) total 
+		FROM erp_member_info m
+		LEFT JOIN erp_dept d ON m.dept_key = d.dept_key
+		<if test="query.key == 'member_info_key'">
+			WHERE member_info_key like #{query.word}
+		</if>
+		<if test="query.key == 'member_info_name'">
+			WHERE member_info_name like #{query.word}
+		</if>
+		<if test="query.key == 'dept_key'">
+			WHERE m.dept_key like #{query.word}
+		</if>
+		<if test="query.key == 'member_info_job'">
+			WHERE member_info_job like #{query.word}
+		</if>
+		<if test="query.key == 'member_info_hiredate'">
+			WHERE member_info_hiredate = #{vo.member_info_hiredate}
+		</if>
+	</select>
+	
+	<select id="getERPMemberKey" resultType="string" statementType="CALLABLE">
+		{call getERPMemberKey()}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO erp_member_info(member_info_key, member_info_id, member_info_pass, member_info_name, member_info_resident, dept_key) 
+		VALUES(#{member_info_key}, #{member_info_id}, #{member_info_pass}, #{member_info_name}, #{member_info_resident}, #{dept_key})
+	</insert>
+	
+	<select id="read" resultType="com.sinhyangERP.ERP.jun.member.MemberVO">
+		SELECT m.*, d.dept_name
+		FROM erp_member_info m
+		LEFT JOIN erp_dept d ON m.dept_key = d.dept_key
+		WHERE member_info_id = #{member_info_id}
+	</select>
+	
+	<update id="updateInfo">
+		UPDATE erp_member_info SET 
+		dept_key = #{dept_key}, 
+		member_info_job = #{member_info_job},
+		member_info_auth = #{member_info_auth},
+		member_info_photo = #{member_info_photo}, 
+		member_info_phone = #{member_info_phone}, 
+		member_info_address1 = #{member_info_address1}, 
+		member_info_address2 = #{member_info_address2}, 
+		member_info_email = #{member_info_email}, 
+		member_info_account = #{member_info_account}, 
+		member_info_salary = #{member_info_salary}
+		WHERE member_info_key = #{member_info_key}
+	</update>
+	
+	<update id="updatePhoto">
+		UPDATE erp_member_info SET
+		member_info_photo = #{member_info_photo}
+		WHERE member_info_key = #{member_info_key}
+	</update>
+	
+	<update id="updateLogin">
+		UPDATE erp_member_info SET 
+		member_info_id = #{member_info_id}, 
+		member_info_pass = #{member_info_pass} 
+		WHERE member_info_key = #{member_info_key}
+	</update>
+	
+	
+	<delete id="delete">
+		DELETE FROM erp_member_info
+		WHERE member_info_key = #{member_info_key}
+	</delete>
+</mapper>

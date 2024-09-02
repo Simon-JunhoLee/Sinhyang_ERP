@@ -1,0 +1,107 @@
+.popup_background {
+    position: fixed;
+    width: 28%;
+    height: 60%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+  }
+  
+  .disappeared {
+    display: none;
+  }
+  
+  .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: whitesmoke;
+    width: 500px;
+    height: 500px;
+    border-radius: 60px 0 60px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Noto Sans KR", sans-serif;
+    /* overflow: hidden; */
+  }
+  
+  .popup::before {
+    content: "※ 본 사이트는 해상도 1920×1080의 웹 화면에 최적화 되어있습니다.";
+    position: absolute;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    /* background-color: aqua; */
+    top: -30px;
+  }
+  
+  .closeBtn {
+    font-size: 45px;
+    color: var(--brand-color);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .greeting {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--darkgray-color);
+    margin: 0;
+  }
+  
+  .point1 {
+    color: var(--brand-color);
+  }
+  
+  .main_img_container {
+
+    width: px;
+    height: 300px;
+    overflow: hidden;
+    margin: 25px 0;
+  }
+  
+  
+  .main_img {
+    height: 100%;
+  }
+  
+  .text_line1 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--darkgray-color);
+    margin: 0;
+  }
+  
+  .text_line2 {
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--brand-color);
+    margin: 5px;
+    margin-bottom: 30px;
+  }
+  
+  .point2 {
+    font-size: 25px;
+    font-weight: 900;
+  }
+  
+  .input_container {
+    position: absolute;
+    left: 40px;
+    bottom: 30px;
+  }
+  
+  .checkbox {
+    margin-right: 5px;
+  }
+  
+  .label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--darkgray-color);
+  }

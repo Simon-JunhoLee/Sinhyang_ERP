@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.bj.ReceiveMessageMapper">
+
+	<select id="list" resultType="hashmap">
+			select m.* ,u.member_info_id
+			from erp_receive_message m, erp_member_info u 
+			where m.message_receiver = #{message_receiver} and u.member_info_id=m.message_receiver and m.message_state=0
+		<if test="key == 'message_content'">
+          and m.message_content like #{word}
+        </if>
+        <if test="key == 'message_title'">
+           and m.message_title like #{word}
+        </if>
+			ORDER BY message_id DESC
+        	LIMIT #{query.start}, #{query.size}
+	</select>
+	
+	
+	  <select id="total" resultType="int">
+         select count(*)
+     	from erp_receive_message m, erp_member_info u 
+		where m.message_receiver = #{message_receiver} and u.member_info_id=m.message_receiver and m.message_state=0
+   		 <if test="key == 'message_content'">
+          and m.message_content like #{word}
+        </if>
+        <if test="key == 'message_title'">
+           and m.message_title like #{word}
+        </if>
+
+    </select>
+    
+    
+	  <select id="dtotal" resultType="int">
+         select count(*)
+     	from erp_receive_message m, erp_member_info u 
+		where m.message_receiver = #{message_receiver} and u.member_info_id=m.message_receiver and m.message_state=1
+   		 <if test="key == 'message_content'">
+          and m.message_content like #{word}
+        </if>
+        <if test="key == 'message_receiver'">
+           and m.message_receiver like #{word}
+        </if>
+        <if test="key == 'message_sender'">
+           and m.message_sender like #{word}
+        </if>
+        <if test="key == 'message_title'">
+           and m.message_title like #{word}
+        </if>
+
+    </select>
+    
+    <select id="nlist" resultType="int">
+    	select m.* ,u.member_info_id
+		from erp_receive_message m
+    	join erp_member_info u on u.member_info_id = m.message_receiver
+    	where m.message_receiver = #{message_receiver}
+      	and m.message_state = 0
+      	and m.message_readdate is null
+    </select>
+    
+      <select id="ntotal" resultType="int">
+         select count(*)
+     	 from erp_receive_message m
+	     join erp_member_info u on u.member_info_id = m.message_receiver
+	     where m.message_receiver = #{message_receiver}
+	     and m.message_state = 0
+	     and m.message_readdate is null
+    </select>
+	
+	
+		
+	 <insert id="insert">
+	 	insert into erp_receive_message (message_sender, message_receiver, message_content, message_title)
+	 	values(#{message_sender}, #{message_receiver}, #{message_content}, #{message_title});
+	 </insert>
+	
+	
+	<update id="updateReceiveState">
+		update erp_receive_message
+		set message_state=1
+		where message_id=#{message_id};
+	</update>
+    
+    
+  	<delete id="delete" >
+		 delete from erp_receive_message 
+		 where message_state=1 and message_id=#{message_id};
+	</delete>
+	
+	<update id="updateReadDate">
+		update erp_receive_message
+		set message_readdate=now()
+		where message_id=#{message_id};
+	</update>
+	
+	<select id="readReceive" resultType="com.sinhyangERP.ERP.bj.message.MessageVO">
+		select m.* ,u.member_info_id
+		from erp_receive_message m, erp_member_info u
+		where m.message_receiver = u.member_info_id and m.message_id = #{message_id};
+	</select>
+	
+	
+	
+    <select id="deleteList" resultType="hashmap">
+      	select m.* ,u.member_info_id
+		from erp_receive_message m, erp_member_info u 
+		where message_receiver = #{message_receiver} and u.member_info_id=m.message_receiver and message_state=1
+        ORDER BY message_id DESC
+        LIMIT #{query.start}, #{query.size};
+    </select>
+    
+   
+    <update id="resetState">
+		update erp_receive_message
+		set message_state=0
+		where message_id=#{message_id};
+	</update>
+    
+
+</mapper>
