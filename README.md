@@ -19,8 +19,8 @@
 ## 기술 스택
 
 
-| JavaScript | JavaScript | JAVA       | React    |  Html    |  CSS   |  MySQL   |  SpringBoot   |
-| :--------: | :--------: | :--------: | :------: | :------: | :-----: |:-----: |:-----: |
+| Java | JavaScript | JAVA       | React    |  Html    |  CSS   |  MySQL   |  SpringBoot   |
+| :-----: | :--------: | :--------: | :------: | :------: | :-----: |:-----: |:-----: |
 |  ![java]   |   ![js]    |   <img src="./sinhyang_front/public/images/stack/java.png" width="100" height="100">  | ![react] | ![html] | ![css] | <img src="./sinhyang_front/public/images/stack/mysql.png" width="100" height="100"> | ![spring] |
 
 <br>
