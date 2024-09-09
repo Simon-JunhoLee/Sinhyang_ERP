@@ -1,4 +1,4 @@
-# FlowBrick
+# SINHYANG
 
 <p align="center">
   <img src="./sinhyang_front/public/images/logo/logo.png">
@@ -8,11 +8,11 @@
 
 ## 프로젝트 소개
 
-### PMS(Project Management System)시스템 구현
+### ERP(Enterprise Resoure Planning)시스템 구현
 
 <p align="justify"> 
-  - 현업에서 많이사용하는 프로그램의 흐름과 개요를 최대한 자세하게 구현함<br>
-  - 프로젝트관리, 캘린더, 일정기능을 비롯하여 공지사항, 채팅기능 부가적인 요소들도 구현
+  - 기업의 자원을 체계적으로 관리하고, 비즈니스 프로세스를 최적화하기 위해 구현<br>
+  - 인사/급여, 판매/구매, 자원/유통, 재무/회계관리를 비롯하여 사내 소통을 위한 공지사항, 메신저 등 부가적인 요소들도 구현
 
 <br>
 
