@@ -66,12 +66,15 @@
 
 <!-- Stack Icon Refernces -->
 
-[js]: /images/stack/javascript.svg
-[ts]: /images/stack/typescript.svg
-[react]: /images/stack/react.svg
-[node]: /images/stack/node.svg
-[css]: /images/stack/css.svg
-[html]: /images/stack/html.svg
-[java]: /images/stack/java.png 
-[oracle]: /images/stack/oracle.png
-[spring]: /images/stack/spring-96.svg
+<!-- Stack Icon Refernces -->
+
+[js]: ./sinhyang_front/public/images/stack/javascript.svg
+[ts]: ./sinhyang_front/public/images/stack/typescript.svg
+[react]: ./sinhyang_front/public/images/stack/react.svg
+[node]: ./sinhyang_front/public/images/stack/node.svg
+[css]: ./sinhyang_front/public/images/stack/css.svg
+[html]: ./sinhyang_front/public/images/stack/html.svg
+[java]: ./sinhyang_front/public/images/stack/java.png 
+[oracle]: ./sinhyang_front/public/images/stack/oracle.png
+[mysql]: ./sinhyang_front/public/images/stack/mysql.png
+[spring]: ./sinhyang_front/public/images/stack/spring-96.svg
