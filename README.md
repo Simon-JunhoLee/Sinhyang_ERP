@@ -23,7 +23,9 @@
 | :--------: | :--------: | :------: | :------: | :-----: |:-----: |:-----: |
 |   <img src="./sinhyang_front/public/images/stack/java.png" width="100" height="100">  |   ![js]    | ![react] | ![html] | ![css] | <img src="./sinhyang_front/public/images/stack/mysql.png" width="100" height="100"> | ![spring] |
 
-<br>
+
+## 프로젝트 기간
+#### 2024.07.01 ~ 2024.07.30
 
 ## 팀원 및 담 기능
 
