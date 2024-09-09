@@ -24,9 +24,10 @@ const Web_Menu = () => {
 
     const onClickLogout = (e) => {
         e.preventDefault();
-        if (window.confirm("정말로 로그아웃하실래요?")) {
-            sessionStorage.clear();
-            window.location.reload();
+        if(window.confirm("로그아웃 하시겠습니까?")){
+            alert('로그아웃 완료. 홈으로 이동합니다.')
+          sessionStorage.clear();
+          window.location.href='/web';
         }
     };
 
@@ -141,7 +142,7 @@ const Web_Menu = () => {
                         </div>
                     </div>
 
-                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{ color: 'black' }} >{vid} 님</div>}
+                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{color:'black'}} >{vid} 님</div>}
                     <div className="web-menu-item web-right-box d-inline-block  me-3" onMouseEnter={() => handleMouseOver(setShowDropdownLog)}
                         onMouseLeave={() => handleMouseLeave(setShowDropdownLog)}>
                         <a className="web-nav-link web-nav-link-custom" href="#"><IoPersonCircleOutline size={32} /></a>
@@ -149,12 +150,12 @@ const Web_Menu = () => {
                             <div className="web-dropdown1-menu">
                                 {sessionStorage.getItem("visitor_id") ?
                                     <>
-                                        <a className="web-dropdown1-item" href="#" onClick={onClickLogout}>로그아웃</a>
-                                        <a className="web-dropdown1-item" href="/web/visitor/mypage">마이페이지</a>
+                                    <a className="web-dropdown1-item" href="#" onClick={onClickLogout}>로그아웃</a>
+                                    <a className="web-dropdown1-item" href="/web/visitor/mypage">마이페이지</a>
                                     </>
-                                    :
+                                    :                                
                                     <a className="web-dropdown1-item" href="/web/visitor/login">로그인</a>
-                                }
+                            }
                             </div>
                         )}
                     </div>

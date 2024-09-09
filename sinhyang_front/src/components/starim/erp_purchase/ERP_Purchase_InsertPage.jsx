@@ -10,7 +10,7 @@ const ERP_Purchase_InsertPage = () => {
 
     const todayDate = new Date().toISOString().split('T')[0];
     const [page] = useState(1);
-    const [size] = useState(15);
+    const [size] = useState(100);
     const [key] = useState("title");
     const [word] = useState("");
 

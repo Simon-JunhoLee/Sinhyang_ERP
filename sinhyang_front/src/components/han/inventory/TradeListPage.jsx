@@ -15,34 +15,23 @@ const TradeListPage = () => {
     const [list, setList] = useState([]);
     const [isSearch, setIsSearch] = useState(false);
 
-    const callAPI = async (searchWord) => {
+    const callAPI = async (searchWord, newPage=1) => {
         try {
             setList([]);
             const res = await axios.get(`/erp/inventory/listAlltrade?key=${key}&word=${searchWord}&page=${page}&size=${size}`)
             console.log(res.data);
             setCount(res.data.count);
             setList(res.data.documents);
-            setIsSearch((key === "" && word === "") || (word === ""));
+            setIsSearch((key === "" && searchWord === "") || (searchWord === ""));
+            setPage(newPage);
         } catch (error) {
             console.log("전체거래목록 출력중 오류", error);
         }
     }
 
     useEffect(() => {
-        setList([]);
-        callAPI("");
-    }, [page, size])
-
-    const onClickMove = () => {
-        window.location.href = '/erp/inventory/itemlist'
-    }
-    const onClickMove2 = () => {
-        window.location.href = '/erp/inventory/warehouselist'
-    }
-
-    const formatCurrency = (amount) => {
-        return amount.toLocaleString();
-    }
+        callAPI(word, page);
+    }, [page])
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -58,9 +47,22 @@ const TradeListPage = () => {
                 default: break;
             }
         }
-        setPage(1);
-        callAPI(searchWord);
-        
+        callAPI(searchWord, 1);
+    }
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    }
+
+    const onClickMove = () => {
+        window.location.href = '/erp/inventory/itemlist'
+    }
+    const onClickMove2 = () => {
+        window.location.href = '/erp/inventory/warehouselist'
+    }
+
+    const formatCurrency = (amount) => {
+        return amount.toLocaleString();
     }
 
     return (
@@ -131,7 +133,7 @@ const TradeListPage = () => {
                             pageRangeDisplayed={5}
                             prevPageText={"‹"}
                             nextPageText={"›"}
-                            onChange={(e) => setPage(e)} />
+                            onChange={handlePageChange} />
                     }
                 </Col>
             </Row>

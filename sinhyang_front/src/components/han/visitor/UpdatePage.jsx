@@ -62,7 +62,7 @@ const UpdatePage = () => {
         if (!vidRegex.test(form.visitor_id)) {
             newErrors.visitor_id = "아이디는 8글자 이상의 영문과 숫자가 포함되어야 합니다.";
         }
-        if (!vpassRegex.test(form.visitor_pass)) {
+        if (form.visitor_pass && !vpassRegex.test(form.visitor_pass)) {
             newErrors.visitor_pass = "비밀번호는 8글자 이상의 영문자, 숫자, 특수문자가 모두 포함되어야 합니다.";
         }
         if (!vemailRegex.test(form.visitor_email)) {
@@ -93,6 +93,10 @@ const UpdatePage = () => {
 
 
         const formData = { ...form, visitor_id: vid }; // visitor_id를 formData에 추가
+        //새비밀번호를 작성했을때만 보냄
+        if(!form.visitor_pass){
+            delete formData.visitor_pass;
+        }
         setLoading(true)
         //텍스트 정보 업데이트
         try {
@@ -117,12 +121,12 @@ const UpdatePage = () => {
                 setLoading(true);
                 await axios.post('/web/visitor/updatePhoto', photoData);
                 setLoading(false);
-                alert("저장완료! 마이페이지로 이동합니다.");
-                window.location.href = '/web/visitor/mypage';
             } catch (error) {
                 console.error("정보수정중 오류", error);
             }
         }
+        alert("저장완료! 마이페이지로 이동합니다.");
+        window.location.href = '/web/visitor/mypage';
     };
 
     const onClickReset = () => {
@@ -138,7 +142,10 @@ const UpdatePage = () => {
                         <h6 className='mb-2'>(*)은 필수 입력 사항입니다.</h6>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="visitor_pass" className='mb-4'>
-                                <Form.Label>새비밀번호(*) (8자 이상의 영문,숫자,특수문자 조합)</Form.Label>
+                                <Form.Label>
+                                    새비밀번호 (8자 이상의 영문,숫자,특수문자 조합)<br/>
+                                    (현재 비밀번호를 유지하려면 비워두세요)
+                                </Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         type={showPassword ? "text" : "password"}

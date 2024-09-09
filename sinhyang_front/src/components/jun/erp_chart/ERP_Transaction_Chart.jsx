@@ -72,7 +72,7 @@ const ERP_Transaction_Chart = () => {
     useEffect(() => {
         callTransaction();
         // setKey(new Date().getFullYear().toString()); // 현재 년도로 설정
-        setKey("2023")
+        setKey(new Date().getFullYear().toString());
     }, []);
 
     useEffect(() => {

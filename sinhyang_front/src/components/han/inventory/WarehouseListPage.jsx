@@ -17,38 +17,23 @@ const WarehouseListPage = () => {
     const [isSearch, setIsSearch] = useState(false);
 
 
-    const callAPI = async (searchWord) => {
+    const callAPI = async (searchWord, newPage=1) => {
         try {
+            setList([]);
             const res = await axios.get(`/erp/inventory/listByWarehouse/${warehouseId}?key=${key}&word=${searchWord}&page=${page}&size=${size}`)
             //console.log(res.data);
             setCount(res.data.count);
             setList(res.data.documents);
-            setIsSearch((key === "" && word === "") || (word === ""));
+            setIsSearch((key === "" && searchWord === "") || (searchWord === ""));
+            setPage(newPage);
         } catch (error) {
             console.log("창고별 목록 페이징중 오류", error);
         }
     }
     useEffect(() => {
-        callAPI("");
+        callAPI(word,page);
     }, [page, warehouseId])
 
-    const onClickMove = () => {
-        window.location.href = '/erp/inventory/itemlist'
-    }
-    const onClickMove2 = () => {
-        window.location.href = '/erp/inventory/tradelist'
-    }
-
-    const onClickWarehouse1 = () => {
-        setWarehouseId(6);
-    }
-
-    const onClickWarehouse2 = () => {
-        setWarehouseId(7);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
     const onSubmit = (e) => {
         e.preventDefault();
         let searchWord = word;
@@ -70,9 +55,31 @@ const WarehouseListPage = () => {
                     break;
             }
         }
-        callAPI(searchWord);
-        setPage(1);
+        callAPI(searchWord,1);
     }
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    }
+
+    const onClickMove = () => {
+        window.location.href = '/erp/inventory/itemlist'
+    }
+    const onClickMove2 = () => {
+        window.location.href = '/erp/inventory/tradelist'
+    }
+
+    const onClickWarehouse1 = () => {
+        setWarehouseId(6);
+    }
+
+    const onClickWarehouse2 = () => {
+        setWarehouseId(7);
+        setKey("")
+        setWord("")
+        setPage(1)
+    }
+
 
 
 
@@ -162,7 +169,7 @@ const WarehouseListPage = () => {
                             pageRangeDisplayed={5}
                             prevPageText={"‹"}
                             nextPageText={"›"}
-                            onChange={(e) => setPage(e)} />
+                            onChange={handlePageChange} />
                     }
                 </Col>
             </Row>

@@ -8,7 +8,7 @@ const ERP_Sales_InsertPage = () => {
 
     const todayDate = new Date().toISOString().split('T')[0];
     const [page] = useState(1);
-    const [size] = useState(35);
+    const [size] = useState(100);
     const [key] = useState("title");
     const [word] = useState("");
 

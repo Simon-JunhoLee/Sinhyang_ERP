@@ -48,6 +48,7 @@
 			<if test="vo.key=='items_type'">
 				and items_type like #{vo.word}
 			</if>
+		order by rest_qnt asc
 		limit #{vo.start}, #{vo.size}
 	</select>
 	<select id="listByWarehouseCount" resultType="int">

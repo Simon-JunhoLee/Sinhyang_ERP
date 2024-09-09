@@ -22,34 +22,23 @@ const InventoryPage = () => {
     const [itemToFetch2, setItemToFetch2] = useState(null);
     const [warehouse, setWarehouse] = useState(0);
 
-    const callAPI = async (searchWord) => {
+    const callAPI = async (searchWord, newPage=1) => {
 
         try {
+            setList([]);
             const res = await axios.get(`/erp/inventory/listAll?key=${key}&word=${searchWord}&page=${page}&size=${size}`);
             //console.log(res.data);
             setCount(res.data.count);
             setList(res.data.documents);
-            setIsSearch((key === "" && word === "") || (word === ""));
+            setIsSearch((key === "" && searchWord === "") || (searchWord === ""));
+            setPage(newPage)
         } catch (error) {
             console.log("전체물품목록 axios 중 오류", error);
         }
     }
     useEffect(() => {
-        callAPI("");
-    }, [page, size])
-
-    const onClickMove = () => {
-        window.location.href = '/erp/inventory/tradelist'
-    }
-    const onClickMove2 = () => {
-        window.location.href = '/erp/inventory/warehouselist'
-    }
-    const onClickMove3 = () => {
-        window.location.href = '/erp/inventory/totalsalebywarehousechart'
-    }
-    const onClickMove4 = () => {
-        window.location.href = '/erp/inventory/salebycountry'
-    }
+        callAPI(word, page);
+    }, [page])
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -72,51 +61,51 @@ const InventoryPage = () => {
                     break;
             }
         }
-        callAPI(searchWord);
-        setPage(1);
+        callAPI(searchWord,1);
+    }
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    }
+
+    const onClickMove = () => {
+        window.location.href = '/erp/inventory/tradelist'
+    }
+    const onClickMove2 = () => {
+        window.location.href = '/erp/inventory/warehouselist'
     }
 
     return (
         <>
             <Row className='justify-content-center'>
-                <h1 className='my-4'>재고리스트</h1>
-                <h3 className="my-4" onClick={() => callAPI()} style={{ cursor: 'pointer' }}>전체물품목록</h3>
-                <div className='mb-3'>
-                    <Button onClick={onClickMove}>전체거래내역</Button>
-                    <Button className='ms-3' onClick={onClickMove3}>창고별매출비율차트</Button>
-                    {/* <Button className='ms-3' onClick={onClickMove4}>해외수출표기</Button> */}
-                    <Button className='ms-3' onClick={onClickMove2}>창고별물품목록</Button>
+                <h1>재고리스트</h1>
+                <h3 className="mb-2" onClick={() => callAPI()} style={{ cursor: 'pointer' }}>전체물품목록</h3>
+                <div>
+                    <Button className='mb-2' onClick={onClickMove}>전체거래내역</Button>
                 </div>
-            </Row>
-            <Row>
+                <div>
+                    <Button className='me-2 mb-2' onClick={onClickMove2}>창고별물품목록</Button>
+                </div>
                 <div className='mb-2'>
-                    <Col lg={6}>
+                    <Col lg={3}>
                         <form onSubmit={onSubmit} className='mb-2'>
                             <InputGroup>
-                                <Col className='col-4 me-3'>
-                                    <Form.Select value={key} onChange={(e) => setKey(e.target.value)}>
-                                        <option value="items_id">코드</option>
-                                        <option value="items_name">이름</option>
-                                        <option value="items_type">타입</option>
-                                    </Form.Select>
-                                </Col>
-                                <Col>
-                                    <InputGroup>
-                                        <FormControl placeholder='검색어를 입력하세요' value={word}
-                                            onChange={(e) => setWord(e.target.value)} />
-                                        <Button type="submit" style={{ width: '15%' }}>검색</Button>
-                                    </InputGroup>
-                                </Col>
+                                <Form.Select value={key} onChange={(e) => setKey(e.target.value)} style={{ width: '30%' }}>
+                                    <option value="items_id">코드</option>
+                                    <option value="items_name">이름</option>
+                                    <option value="items_type">타입</option>
+                                </Form.Select>
+                                <FormControl placeholder='검색어를 입력하세요' value={word}
+                                    onChange={(e) => setWord(e.target.value)} style={{ width: '55%' }} />
+                                <Button type="submit" style={{ width: '15%' }}>검색</Button>
                             </InputGroup>
                         </form>
                     </Col>
-                    <Col>
-                        {isSearch ? ("전체물품종류 : " + count + " 개") : ("검색결과 : " + count + " 건")}
-                    </Col>
+                    {isSearch ? ("전체물품종류 : " + count + " 개") : ("검색결과 : " + count + " 건")}
                 </div>
             </Row>
             <Row className='justify-content-center'>
-                <Col lg={12}>
+                <Col lg={10}>
                     <Table>
                         <thead className='text-center'>
                             <tr>
@@ -162,7 +151,7 @@ const InventoryPage = () => {
                             pageRangeDisplayed={5}
                             prevPageText={"‹"}
                             nextPageText={"›"}
-                            onChange={(e) => setPage(e)} />
+                            onChange={handlePageChange} />
                     }
                 </Col>
             </Row>
