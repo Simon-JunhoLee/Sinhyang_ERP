@@ -33,6 +33,7 @@ public class InventoryController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("count", dao.listByWarehouseCount(vo, warehouse_id));
 		map.put("documents", dao.listByWarehouse(vo, warehouse_id));
+		map.put("list", dao.warehouseName());
 		return map;
 	}
 	

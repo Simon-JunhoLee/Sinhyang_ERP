@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.sinhyangERP.ERP.common.QueryVO;
+import com.sinhyangERP.ERP.starim.warehouse.WareHouseVO;
 
 public interface InventoryDAO {
 	public List<InventoryVO> listAll(QueryVO vo);
@@ -19,4 +20,6 @@ public interface InventoryDAO {
 	public int listAlltradeCount(QueryVO vo);
 	
 	public List<InventoryVO> restqnt(String items_id);
+	
+	public List<WareHouseVO> warehouseName();
 }

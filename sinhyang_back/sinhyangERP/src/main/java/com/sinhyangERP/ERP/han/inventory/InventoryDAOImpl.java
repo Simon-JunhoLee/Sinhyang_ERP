@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sinhyangERP.ERP.common.QueryVO;
+import com.sinhyangERP.ERP.starim.warehouse.WareHouseVO;
 
 @Repository
 public class InventoryDAOImpl implements InventoryDAO{
@@ -78,5 +79,11 @@ public class InventoryDAOImpl implements InventoryDAO{
 	@Override
 	public List<InventoryVO> restqnt(String items_id) {
 		return session.selectList(namespace + ".restqnt", items_id);
+	}
+	
+	@Override
+	public List<WareHouseVO> warehouseName() {
+		
+		return session.selectList(namespace + ".warehouseName");
 	}
 }

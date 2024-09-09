@@ -48,13 +48,13 @@ const ERP_WareHouseInsertPage = () => {
 
   return (
     <Row className='justify-content-center'>
-        <Col lg={3}>
+        <Col lg={5}>
             <Card>
                 <Card.Header>
                     <h1>창고등록</h1>
                 </Card.Header>
                 <Card.Body>
-                    <InputGroup>
+                    <InputGroup className='mb-2'>
                         <InputGroup.Text>창고이름</InputGroup.Text>
                         <Form.Control value={wareHouseName} onChange={(e)=>setWareHouseName(e.target.value)} />
                     </InputGroup>

@@ -143,6 +143,7 @@ return (
                                             <option value="차장">차장</option>
                                             <option value="팀장">팀장</option>
                                             <option value="임원">임원</option>
+                                            <option value="퇴사">퇴사</option>
                                         </Form.Select>
                                         <Button variant='dark' type='submit'>검색</Button>
                                     </>

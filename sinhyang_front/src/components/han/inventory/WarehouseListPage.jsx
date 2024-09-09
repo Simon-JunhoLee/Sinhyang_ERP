@@ -15,21 +15,25 @@ const WarehouseListPage = () => {
     const [list, setList] = useState([]);
     const [warehouseId, setWarehouseId] = useState(6);
     const [isSearch, setIsSearch] = useState(false);
+    const [warehouse_list, setWarehouse_list] = useState([]);
 
 
     const callAPI = async (searchWord, newPage = 1) => {
         try {
             setList([]);
             const res = await axios.get(`/erp/inventory/listByWarehouse/${warehouseId}?key=${key}&word=${searchWord}&page=${page}&size=${size}`)
-            //console.log(res.data);
+            console.log(res.data);
             setCount(res.data.count);
             setList(res.data.documents);
+            setWarehouse_list(res.data.list);
+            console.log(warehouse_list)
             setIsSearch((key === "" && searchWord === "") || (searchWord === ""));
             setPage(newPage);
         } catch (error) {
             console.log("창고별 목록 페이징중 오류", error);
         }
     }
+
     useEffect(() => {
         callAPI(word, page);
     }, [page, warehouseId])
@@ -69,18 +73,27 @@ const WarehouseListPage = () => {
         window.location.href = '/erp/inventory/tradelist'
     }
 
-    const onClickWarehouse1 = () => {
-        setWarehouseId(6);
-    }
 
-    const onClickWarehouse2 = () => {
-        setWarehouseId(7);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
-
-
+    // 자동으로 창고이름에 맞게 버튼 생성
+    const renderWarehouseButton = () => {
+        return warehouse_list
+            .filter(warehouse => warehouse.warehouse_name !== null && warehouse.warehouse_name !== "")
+            .map((warehouse, index) => {
+                const displayName = warehouse.warehouse_name.replace("물류센터", "");
+                return (
+                    <Button className='me-2 mb-2' key={index} onClick={() => handleWarehouseClick(warehouse)}>
+                        {displayName}
+                    </Button>
+                );
+            });
+    };
+    //창고이름버튼 눌렀을때
+    const handleWarehouseClick = (warehouse) => {
+        setWarehouseId(warehouse.warehouse_id);
+        setKey("");
+        setWord("");
+        setPage(1);
+    };
 
 
     return (
@@ -94,9 +107,8 @@ const WarehouseListPage = () => {
                         <Button className='me-2' onClick={onClickMove2}>전체거래내역</Button>
                         <Button onClick={() => callAPI()}>창고별 물품 목록</Button>
                     </div>
-                    <div>
-                        <Button className='me-2 mb-2' onClick={onClickWarehouse1}>동부</Button>
-                        <Button className='me-2 mb-2' onClick={onClickWarehouse2}>파주</Button>
+                    <div style={{ display: 'flex' }}>
+                        {renderWarehouseButton()}
                     </div>
                 </Col>
             </Row>
@@ -115,7 +127,7 @@ const WarehouseListPage = () => {
                             <Col>
                                 <InputGroup>
                                     <FormControl placeholder='검색어를 입력하세요' value={word}
-                                        onChange={(e) => setWord(e.target.value)}/>
+                                        onChange={(e) => setWord(e.target.value)} />
                                     <Button type="submit">검색</Button>
                                 </InputGroup>
                             </Col>
