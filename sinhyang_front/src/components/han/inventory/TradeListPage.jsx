@@ -15,7 +15,7 @@ const TradeListPage = () => {
     const [list, setList] = useState([]);
     const [isSearch, setIsSearch] = useState(false);
 
-    const callAPI = async (searchWord, newPage=1) => {
+    const callAPI = async (searchWord, newPage = 1) => {
         try {
             setList([]);
             const res = await axios.get(`/erp/inventory/listAlltrade?key=${key}&word=${searchWord}&page=${page}&size=${size}`)
@@ -67,33 +67,44 @@ const TradeListPage = () => {
 
     return (
         <>
-            <Row>
-                <h1>재고리스트</h1>
-                <h3 className="mb-2" onClick={() => callAPI()} style={{ cursor: 'pointer' }}>전체거래내역</h3>
-                <div>
-                    <Button className='mb-2' onClick={onClickMove}>전체물품목록</Button>
-                </div>
-                <div>
-                    <Button className='me-2 mb-2' onClick={onClickMove2}>창고별물품목록</Button>
-                </div>
-                <div className='mb-2'>
-                    <Col lg={3}>
-                        <form onSubmit={onSubmit} className='mb-2'>
-                            <InputGroup>
-                                <Form.Select value={key} onChange={(e) => setKey(e.target.value)} style={{ width: '30%' }}>
+            <Row className='my-3'>
+                <Col>
+                    <h1>재고리스트</h1>
+                    <h3 className='my-3'>전체 거래 내역</h3>
+                    <div className='mt-5 mb-3'>
+                        <Button className='me-2' onClick={onClickMove}>전체 물품 목록</Button>
+                        <Button className='me-2' onClick={() => callAPI()}>전체 거래 내역</Button>
+                        <Button onClick={onClickMove2}>창고별 물품 목록</Button>
+                    </div>
+                </Col>
+            </Row>
+            <Row className='mb-3'>
+                <Col lg={4}>
+                    <form onSubmit={onSubmit} className='mb-2'>
+                        <InputGroup>
+                            <Col className='col-4 me-3'>
+                                <Form.Select value={key} onChange={(e) => setKey(e.target.value)}>
                                     <option value="date">날짜</option>
                                     <option value="type">거래분류</option>
                                     <option value="item_name">물품</option>
                                     <option value="warehouse_name">창고</option>
                                 </Form.Select>
-                                <FormControl placeholder='검색어를 입력하세요' value={word}
-                                    onChange={(e) => setWord(e.target.value)} style={{ width: '55%' }} />
-                                <Button type="submit" style={{ width: '15%' }}>검색</Button>
-                            </InputGroup>
-                        </form>
-                    </Col>
-                    {isSearch ? ("전체거래내역 : " + count + " 건") : ("검색결과 : " + count + " 건")}
-                </div>
+                            </Col>
+                            <Col>
+                                <InputGroup>
+                                    <FormControl placeholder='검색어를 입력하세요' value={word}
+                                        onChange={(e) => setWord(e.target.value)} />
+                                    <Button type="submit">검색</Button>
+                                </InputGroup>
+                            </Col>
+                        </InputGroup>
+                    </form>
+                </Col>
+                <Col lg={2}>
+                    <div className='align-middle mt-2'>
+                        <span className='me-3'>{isSearch ? ("전체거래내역 : " + count + " 건") : ("검색결과 : " + count + " 건")}</span>
+                    </div>
+                </Col>
             </Row>
             <Row className='justify-content-center'>
                 <Col lg={12}>

@@ -17,7 +17,7 @@ const WarehouseListPage = () => {
     const [isSearch, setIsSearch] = useState(false);
 
 
-    const callAPI = async (searchWord, newPage=1) => {
+    const callAPI = async (searchWord, newPage = 1) => {
         try {
             setList([]);
             const res = await axios.get(`/erp/inventory/listByWarehouse/${warehouseId}?key=${key}&word=${searchWord}&page=${page}&size=${size}`)
@@ -31,7 +31,7 @@ const WarehouseListPage = () => {
         }
     }
     useEffect(() => {
-        callAPI(word,page);
+        callAPI(word, page);
     }, [page, warehouseId])
 
     const onSubmit = (e) => {
@@ -55,7 +55,7 @@ const WarehouseListPage = () => {
                     break;
             }
         }
-        callAPI(searchWord,1);
+        callAPI(searchWord, 1);
     }
 
     const handlePageChange = (newPage) => {
@@ -85,36 +85,48 @@ const WarehouseListPage = () => {
 
     return (
         <>
-            <Row>
-                <h1>재고리스트</h1>
-                <h3>창고별물품목록</h3>
-                <div>
-                    <Button className='mb-2' onClick={onClickMove}>전체물품목록</Button>
-                </div>
-                <div>
-                    <Button className='mb-2' onClick={onClickMove2}>전체거래내역</Button>
-                </div>
-                <div>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse1}>동부</Button>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse2}>파주</Button>
-                </div>
-                <div className='mb-2'>
-                    <Col lg={3}>
-                        <form onSubmit={onSubmit} className='mb-2'>
-                            <InputGroup>
-                                <Form.Select value={key} onChange={(e) => setKey(e.target.value)} style={{ width: '30%' }}>
+            <Row className='my-3'>
+                <Col>
+                    <h1>재고리스트</h1>
+                    <h3 className='my-3'>창고별 물품 목록</h3>
+                    <div className='mt-5 mb-3'>
+                        <Button className='me-2' onClick={onClickMove}>전체물품목록</Button>
+                        <Button className='me-2' onClick={onClickMove2}>전체거래내역</Button>
+                        <Button onClick={() => callAPI()}>창고별 물품 목록</Button>
+                    </div>
+                    <div>
+                        <Button className='me-2 mb-2' onClick={onClickWarehouse1}>동부</Button>
+                        <Button className='me-2 mb-2' onClick={onClickWarehouse2}>파주</Button>
+                    </div>
+                </Col>
+            </Row>
+
+            <Row className='mb-3'>
+                <Col lg={4}>
+                    <form onSubmit={onSubmit} className='mb-2'>
+                        <InputGroup>
+                            <Col className='col-4 me-3'>
+                                <Form.Select value={key} onChange={(e) => setKey(e.target.value)}>
                                     <option value="items_id">코드</option>
                                     <option value="items_name">이름</option>
                                     <option value="items_type">타입</option>
                                 </Form.Select>
-                                <FormControl placeholder='검색어를 입력하세요' value={word}
-                                    onChange={(e) => setWord(e.target.value)} style={{ width: '55%' }} />
-                                <Button type="submit" style={{ width: '15%' }}>검색</Button>
-                            </InputGroup>
-                        </form>
-                    </Col>
-                    {isSearch ? ("전체상품종류 : " + count + " 개") : ("검색결과 : " + count + " 개")}
-                </div>
+                            </Col>
+                            <Col>
+                                <InputGroup>
+                                    <FormControl placeholder='검색어를 입력하세요' value={word}
+                                        onChange={(e) => setWord(e.target.value)}/>
+                                    <Button type="submit">검색</Button>
+                                </InputGroup>
+                            </Col>
+                        </InputGroup>
+                    </form>
+                </Col>
+                <Col lg={2}>
+                    <div className='align-middle mt-2'>
+                        {isSearch ? ("전체상품종류 : " + count + " 개") : ("검색결과 : " + count + " 개")}
+                    </div>
+                </Col>
             </Row>
             <Row>
                 <Col lg={10}>
