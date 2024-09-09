@@ -1,9 +1,7 @@
 # FlowBrick
 
 <p align="center">
-  <br>
   <img src="./sinhyang_front/public/images/logo/logo.png">
-  <br>
 </p>
 
 목차
