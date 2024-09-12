@@ -44,6 +44,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 		// TODO Auto-generated method stub
 		return session.selectList(namespace + ".selectData", query);
 	}
+
+	@Override
+	public List<TransactionVO> selectMonth(QueryVO query) {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace + ".selectMonth", query);
+	}
 	
 	@Override
 	public HashMap<String, Object> read(int transaction_id) {
@@ -56,4 +62,5 @@ public class TransactionDAOImpl implements TransactionDAO {
 		// TODO Auto-generated method stub
 		session.insert(namespace + ".insert", vo);
 	}
+
 }

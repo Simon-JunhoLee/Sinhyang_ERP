@@ -53,6 +53,11 @@ public class TransactionController {
 		return dao.selectData(query);
 	}
 	
+	@GetMapping("/selectMonth")
+	public List<TransactionVO> selectMonth(QueryVO query) {
+		return dao.selectMonth(query);
+	}
+	
 	@GetMapping("/{transaction_id}")
 	public HashMap<String, Object> read(@PathVariable("transaction_id") int transaction_id) {
 		return dao.read(transaction_id);

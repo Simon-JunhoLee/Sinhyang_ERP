@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, FormControl, InputGroup, Row, Table } from 'react-bootstrap'
 import Pagination from 'react-js-pagination';
 import '../../starim/starim_common/paging.css';
-import { useAsyncError } from 'react-router-dom';
 import RestQntModal from './RestQntModal';
 import RecentTradeListModal from './RecentTradeListModal';
 
@@ -11,15 +10,11 @@ const InventoryPage = () => {
 
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(5);
-    const [total, setTotal] = useState(0);
     const [count, setCount] = useState(0);
     const [key, setKey] = useState("");
     const [word, setWord] = useState('');
     const [list, setList] = useState([]);
     const [isSearch, setIsSearch] = useState(false);
-    const [item, setItem] = useState("");
-    const [itemToFetch, setItemToFetch] = useState(null);
-    const [itemToFetch2, setItemToFetch2] = useState(null);
     const [warehouse, setWarehouse] = useState(0);
 
     const callAPI = async (searchWord, newPage = 1) => {

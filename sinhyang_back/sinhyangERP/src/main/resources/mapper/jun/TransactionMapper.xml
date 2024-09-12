@@ -28,39 +28,40 @@
 		LEFT JOIN view_client c ON t.client_id = c.client_id 
 			WHERE account_number = #{vo.account_number}
 			<if test="query.key == 'member_info_key'">
-				AND member_info_key like #{query.word}
+				AND m.member_info_name like #{query.word}
 			</if>
 			<if test="query.key == 'client_id'">
-				AND client_id like #{query.word}
+				AND c.client_name like #{query.word}
 			</if>
 			<if test="query.key == 'vendor_id'">
-				AND vendor_id like #{query.word}
+				AND v.vendor_name like #{query.word}
 			</if>
-			<if test="query.key == 'transaction_date'">
-				AND transaction_date = #{vo.transaction_date}
-			</if> 
+			<if test="query.key == 'transaction_date_str'">
+			    AND DATE_FORMAT(t.transaction_date, '%Y-%m-%d') like #{vo.transaction_date_str}
+			</if>
 		ORDER BY transaction_date desc 
 		limit #{query.start}, #{query.size}
 	</select>
 	
 	<select id="total" resultType="int">
 		SELECT count(*) total 
-		FROM erp_transaction 
-		<where>
+		FROM erp_transaction t
+		LEFT JOIN erp_member_info m ON t.member_info_key = m.member_info_key
+		LEFT JOIN view_vendor v ON t.vendor_id = v.vendor_id 
+		LEFT JOIN view_client c ON t.client_id = c.client_id 
+			WHERE account_number = #{vo.account_number}
 			<if test="query.key == 'member_info_key'">
-				member_info_key like #{query.word}
+				AND m.member_info_name like #{query.word}
 			</if>
 			<if test="query.key == 'client_id'">
-				client_id like #{query.word}
+				AND c.client_name like #{query.word}
 			</if>
 			<if test="query.key == 'vendor_id'">
-				vendor_id like #{query.word}
+				AND v.vendor_name like #{query.word}
 			</if>
-			<if test="query.key == 'transaction_date'">
-				transaction_date = #{vo.transaction_date}
+			<if test="query.key == 'transaction_date_str'">
+				AND DATE_FORMAT(t.transaction_date, '%Y-%m-%d') like #{vo.transaction_date_str}
 			</if> 
-			AND account_number = #{vo.account_number}
-		</where>
 	</select>
 	
 	<select id="data" resultType="com.sinhyangERP.ERP.jun.transaction.TransactionVO">
@@ -75,6 +76,17 @@
 		<where>
 	        <if test="key != null">
 	            AND DATE_FORMAT(transaction_date, '%Y') = #{key}
+	        </if>
+	    </where>
+		ORDER BY transaction_date desc
+	</select>
+	
+	<select id="selectMonth" resultType="com.sinhyangERP.ERP.jun.transaction.TransactionVO">
+		SELECT *
+		FROM erp_transaction
+		<where>
+	        <if test="key != null">
+	            AND DATE_FORMAT(transaction_date, '%Y-%m') = #{key}
 	        </if>
 	    </where>
 		ORDER BY transaction_date desc

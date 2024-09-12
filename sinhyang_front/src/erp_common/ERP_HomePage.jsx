@@ -4,6 +4,7 @@ import ChartTest from '../components/starim/starim_common/ChartTest';
 import ERP_Attendance_HomePage from '../components/jun/erp_attendance/ERP_Attendance_HomePage';
 import ERP_Notice_List from '../components/jun/erp_chart/ERP_Notice_List';
 import { AiOutlineRise } from "react-icons/ai";
+import ERP_Transaction_Month from '../components/jun/erp_chart/ERP_Transaction_Month';
 
 
 const ERP_HomePage = () => {
@@ -44,7 +45,8 @@ const ERP_HomePage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <ERP_Transaction_Month/>
+                            {/* <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row alig n-items-start">
@@ -72,7 +74,7 @@ const ERP_HomePage = () => {
                                     </div>
                                     <div id="earning"></div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

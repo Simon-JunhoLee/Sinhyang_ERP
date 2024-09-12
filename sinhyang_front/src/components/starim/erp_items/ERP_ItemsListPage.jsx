@@ -23,18 +23,18 @@ const ERP_ItemsListPage = () => {
 
     const [list, setList] = useState([]);
 
-    const callAPI = async (searchWord) => {
+    const callAPI = async (searchWord, newPage = 1) => {
         const res = await axios.get(`/erp/items?key=${key}&word=${searchWord}&page=${page}&size=${size}`);
         //console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
         setFile({ name: res.data.image, byte: null })
-
+        setPage(newPage)
     }
 
     useEffect(() => {
-        callAPI("");
-    }, [page])
+        callAPI(word, page);
+    }, [page]);
 
 
     const onClickItemsInsert = () => {
@@ -97,7 +97,7 @@ const ERP_ItemsListPage = () => {
                     break;
             }
         }
-        callAPI(searchWord);
+        callAPI(searchWord, 1);
         setPage(1);
     }
 

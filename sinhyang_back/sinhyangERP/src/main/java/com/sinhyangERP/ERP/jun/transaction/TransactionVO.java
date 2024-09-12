@@ -12,6 +12,7 @@ public class TransactionVO extends PurchaseVO{
 	private int transaction_deposit;
 	private int transaction_withdraw;
 	private Date transaction_date;
+	private String transaction_date_str;
 	private String member_info_key;
 	private int client_id;
 	private int vendor_id;
@@ -59,6 +60,14 @@ public class TransactionVO extends PurchaseVO{
 	public void setTransaction_date(Date transaction_date) {
 		this.transaction_date = transaction_date;
 	}
+	public String getTransaction_date_str() {
+		return transaction_date_str;
+	}
+
+	public void setTransaction_date_str(String transaction_date_str) {
+		this.transaction_date_str = transaction_date_str;
+	}
+
 	public String getAccount_number() {
 		return account_number;
 	}
