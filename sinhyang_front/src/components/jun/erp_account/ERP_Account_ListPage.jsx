@@ -89,6 +89,7 @@ const ERP_Account_ListPage = () => {
 
     const onDeleteAccount = async () => {
         const url = `/erp/account/${accountNumber}`;
+        console.log(transactions);
         // console.log(accountNumber);
         Swal.fire({
             title: `해당 계좌를 삭제하시겠습니까?`,
@@ -100,22 +101,23 @@ const ERP_Account_ListPage = () => {
             confirmButtonText: "Delete"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                if (transactions) {
+                if (transactions.length>0) {
                     Swal.fire({
                         title: "계좌 삭제 불가!",
                         text: "해당 계좌는 거래내역이 있어, 삭제가 불가능합니다.",
                         icon: "error"
                     });
                     return;
+                }else{
+                    await axios.delete(url);
+                    Swal.fire({
+                        title: "계좌 삭제 완료!",
+                        text: "",
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = `/erp/account/list`;
+                    });
                 }
-                await axios.delete(url);
-                Swal.fire({
-                    title: "계좌 삭제 완료!",
-                    text: "",
-                    icon: "success"
-                }).then(() => {
-                    window.location.href = `/erp/account/list`;
-                });
             }
         });
     }

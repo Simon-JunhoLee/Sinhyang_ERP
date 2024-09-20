@@ -71,7 +71,7 @@ const ERP_Client_InsertPage = () => {
 
   return (
     <Row className='justify-content-center'>
-        <Col lg={3}>
+        <Col lg={10}>
             <Card>
                 <Card.Header>
                     <h1>고객사등록</h1>

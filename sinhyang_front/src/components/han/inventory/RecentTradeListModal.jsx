@@ -30,7 +30,7 @@ const RecentTradeListModal = ({ item, warehouse }) => {
             <Button variant="primary" onClick={handleShow}>
                 거래보기
             </Button>
-            <Modal show={show} onHide={handleClose} size="lg">
+            <Modal show={show} onHide={handleClose} centered size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>최근 거래 내역</Modal.Title>
                 </Modal.Header>

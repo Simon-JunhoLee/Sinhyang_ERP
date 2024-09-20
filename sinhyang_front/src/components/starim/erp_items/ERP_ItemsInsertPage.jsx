@@ -84,7 +84,7 @@ const ERP_ItemsInsertPage = () => {
 
   return (
     <Row className='justify-content-center'>
-        <Col lg={3}>
+        <Col lg={10}>
             <Card>
                 <Card.Header>
                     <h1>물품등록</h1>
@@ -100,7 +100,7 @@ const ERP_ItemsInsertPage = () => {
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text className='me-5'>물품사진</InputGroup.Text>
-                        <img src={file.name || items_photo || "http://via.placeholder.com/50x50"} style={photoStyle} width="50%" onClick={()=>refFile.current.click()} onChange={onChangeForm} />
+                        <img src={file.name || items_photo || "http://via.placeholder.com/50x50"} style={photoStyle} width="20%" onClick={()=>refFile.current.click()} onChange={onChangeForm} />
                         <input ref={refFile} type='file' onChange={onChangeFile} style={{display:"none"}}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>

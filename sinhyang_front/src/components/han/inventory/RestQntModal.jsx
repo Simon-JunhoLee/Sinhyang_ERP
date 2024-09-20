@@ -29,7 +29,7 @@ const RestQntModal = ({ inventory }) => {
             <Button variant="primary" onClick={handleShow}>
                 재고보기
             </Button>
-            <Modal show={show} onHide={handleClose} size="lg">
+            <Modal show={show} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>창고별 재고 확인</Modal.Title>
                 </Modal.Header>

@@ -20,6 +20,7 @@ const res = await axios.get('https://newsapi.org/v2/top-headlines', {
   },
 });
 
+
 setNews(res.data.articles);
 //console.log(res.data.articles);
 // 카테고리 technology  business entertainment health science sports

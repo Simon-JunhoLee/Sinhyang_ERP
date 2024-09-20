@@ -39,7 +39,7 @@ const ERPVendorMemberModal = ({form, setForm}) => {
         <>
         <Form.Control value={form.vendor_employee} name='vendor_employee' placeholder='거래처담당자' onClick={handleShow} readOnly/>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} centered size='lg'>
             <Modal.Header closeButton>
                 <Modal.Title>직원목록</Modal.Title>
             </Modal.Header>

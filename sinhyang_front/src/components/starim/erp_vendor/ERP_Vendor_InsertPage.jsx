@@ -64,7 +64,7 @@ const ERP_Vendor_InsertPage = () => {
 
   return (
     <Row className='justify-content-center'>
-        <Col lg={3}>
+        <Col lg={10}>
             <Card>
                 <Card.Header>
                     <h1>구매처등록</h1>

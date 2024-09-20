@@ -9,6 +9,7 @@
 @import "../libs/simplebar/dist/simplebar.css";
 @import "../css/icons/tabler-icons/tabler-icons.css";
 
+
 :root,
 [data-bs-theme=light] {
     --bs-blue: #5D87FF;
