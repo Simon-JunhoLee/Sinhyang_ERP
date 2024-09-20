@@ -4,7 +4,7 @@ import { Accordion, Col, Container, Row, Table } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const WEB_FAQPage = () => {
-    const [list, setList] =useState([]);
+    const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
 
@@ -12,8 +12,8 @@ const WEB_FAQPage = () => {
     const [key, setKey] = useState('');
     const [word, setWord] = useState('');
 
-    const callAPI =async()=>{
-        const res= await axios.get(`/faq/list?key=${key}&word=${word}&size=${size}&page=${page}`);
+    const callAPI = async () => {
+        const res = await axios.get(`/faq/list?key=${key}&word=${word}&size=${size}&page=${page}`);
         console.log(res.data.FAQlist);
         console.log(res.data.total);
         setList(res.data.FAQlist);
@@ -21,32 +21,34 @@ const WEB_FAQPage = () => {
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         callAPI();
     }, [page, key]);
 
-  return (
-    <Container className='text-center mb-5' >
-        <h1 className='mb-5'>자주 묻는 질문 (FAQ)</h1>
-        
-        <Row>
-            <Col>
-            <Accordion>
+    return (
+        <Container>
+            <h1 className='text-center mb-5'>자주 묻는 질문 (FAQ)</h1>
+
+            <Row>
+                <Col>
+                    <Accordion>
                         {list.map((faq, index) => (
-                        <Accordion.Item eventKey={index.toString()} key={faq.faq_id}>
-                             <Accordion.Header>
-                                 <span className="web-faq-color">[Q]</span> {faq.faq_title}
-                             </Accordion.Header>
-                             <Accordion.Body>{faq.faq_contents}</Accordion.Body>
-                         </Accordion.Item>
+                            <Accordion.Item eventKey={index.toString()} key={faq.faq_id}>
+                                <Accordion.Header>
+                                    <span className="web-faq-color">[Q]</span> {faq.faq_title}
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <span className="web-faq-color">[A]</span> {faq.faq_content}
+                                </Accordion.Body>
+                            </Accordion.Item>
                         ))}
                     </Accordion>
-            </Col>
-        </Row>
-        
-    </Container>
-    
-  )
+                </Col>
+            </Row>
+
+        </Container>
+
+    )
 }
 
 export default WEB_FAQPage
